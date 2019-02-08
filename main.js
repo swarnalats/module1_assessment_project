@@ -6,7 +6,7 @@ $(initializeApp)
  * Its initial value should be an empty array.
  * @var {array} deck
  */
-var deck = [];
+var deck;
 
 /**
  * Function to call when the page has fully loaded.
@@ -20,9 +20,7 @@ var deck = [];
  * @return undefined
  */
 function initializeApp(){
-    createDeck(deck);
-    deck = shuffleCards(deck);
-    dealCards(7, deck);
+
 }
 
 /**
@@ -34,11 +32,8 @@ function initializeApp(){
  * @param {array} cardDeck - Array to add cards to as they are built.
  * @return undefined
  */
-function createDeck(cardDeck){
-    var suitArray = ["heart","club","spade", "diamond"];
-    var cardValuesArray = ["ace","two","three","four","five","six","seven","eight","nine","ten","jack","queen","king"];
+function createDeck( ){
 
-    suitArray.map(suit => cardDeck.push(...buildSuit(suit, cardValuesArray)));
 }
 
 /**
@@ -54,8 +49,8 @@ function createDeck(cardDeck){
  * @param {array} cardValues - The array of card types you will build for this card suit
  * @return {array} - The array of cards you have created for this suit
  */
-function buildSuit(suit, cardValues){
-    return cardValues.map(card => buildCard(suit,card))
+function buildSuit( ){
+
 }
 
 /**
@@ -68,11 +63,8 @@ function buildSuit(suit, cardValues){
  * @param {string} cardValue - The name of the card type for this card
  * @return {object} - The object containing information about this individual card
  */
-function buildCard(suit, cardValue){
-    return {
-        suit,
-        cardValue
-    }
+function buildCard( ){
+
 }
 
 /**
@@ -85,14 +77,8 @@ function buildCard(suit, cardValue){
  * @param {array} cardDeck - The array of cards that you will shuffle
  * @return {array} Array of cards after having been shuffled
  */
-function shuffleCards(cardDeck){
-    for(var i = cardDeck.length - 1; i >= 0; i--){
-        var randomIndex = Math.floor(Math.random() * cardDeck.length);
-        var temp = cardDeck[randomIndex];
-        cardDeck[randomIndex] = cardDeck[i];
-        cardDeck[i] = temp;
-    }
-    return cardDeck;
+function shuffleCards( ){
+
 }
 
 /**
@@ -111,10 +97,6 @@ function shuffleCards(cardDeck){
  * @param {array} cardDeck - The array of cards that you will deal from
  * @return none
  */
-function dealCards(num, cardDeck){
-    var hand = cardDeck.splice(0, num);
-    for(var i = 0; i < hand.length; i++){
-        var card = $("<div>").addClass(`card ${hand[i].suit} ${hand[i].cardValue}`);
-        $(".card-container").append(card);
-    }
+function dealCards( ){
+
 }
