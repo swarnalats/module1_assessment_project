@@ -1,5 +1,5 @@
 /** once the document has loaded, call the intitializeApp function */
-$(initializeApp)
+
 
 /**
  * A global variable called "deck" that will hold your deck of cards.
