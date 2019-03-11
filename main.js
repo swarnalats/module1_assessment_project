@@ -1,102 +1,113 @@
-/** once the document has loaded, call the intitializeApp function */
+//Global variable which stores the deck of cards
+var deck = [];
 
 
-/**
- * A global variable called "deck" that will hold your deck of cards.
- * Its initial value should be an empty array.
- * @var {array} deck
- */
-var deck;
+$(document).ready(function() {
+    initializeApp();
+});    
 
-/**
- * Function to call when the page has fully loaded.
- * This function should do the following:
- * 1. Call your createDeck function, and pass in your global "deck" variable.
- * 2. Call your shuffleCards function while passing in your global "deck" variable as a parameter.
- * 3. Set the "deck" global variable to be equal to the return value from your shuffleCards function call.
- * 4. Deal 7 cards using your dealCards function.
- * @function initializeApp
- * @param none
- * @return undefined
- */
-function initializeApp(){
-
+//This function is called when the document is ready 
+function initializeApp()
+{
+    createDeck(deck);
+    deck=shuffleCards(deck);
+    console.log("This is the new deck",deck);
+    dealCards(7,deck);
 }
 
-/**
- * Function that builds a full deck of cards
- * This function should do the following:
- * 1. For each suit in your array of card suits, you will call the buildSuit function. Make sure you pass forward the necessary parameters!
- * 2. Add each individual card in the array that is returned from your buildSuit function call into the cardDeck you received as a parameter.
- * @function createDeck
- * @param {array} cardDeck - Array to add cards to as they are built.
- * @return undefined
- */
-function createDeck( ){
-
+//Creates the deck of cards 
+function createDeck(cardDeck) {
+    var cardSuit = ['spade','club','heart','diamond'];
+    
+    for(var x = 0; x < cardSuit.length ; x++) {
+            cardDeck = cardDeck.concat(buildSuit(cardSuit[x]));     
+    }
+    deck = cardDeck;
 }
 
-/**
- * Function that builds all individual cards for one suit
- * This function will create an individual card for each card type given in the "cards" parameter.
- * This function should do the following:
- * 1. Create a variable to hold all the cards you make for this suit. It should be an array.
- * 2. For each individual card value in the "cardValues" array parameter, call the buildCard function. Make sure you pass forward the necessary parameters!
- * 3. Save the card object that is returned from the buildCard function into an array.
- * 4. Return the array of cards you have built.
- * @function buildSuit
- * @param {string} suit - The name of the suit of cards being built
- * @param {array} cardValues - The array of card types you will build for this card suit
- * @return {array} - The array of cards you have created for this suit
- */
-function buildSuit( ){
+//This function creates and returns an array for a particular suit that is sent as a parameter 
+function buildSuit(cards)
+{
+    var thisSuit = [];
+    var cardValues = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
+    for(var y=0; y < cardValues.length; y++){
+        thisSuit.push(buildCard(cards,cardValues[y]));   
+    }
+    return thisSuit;
 }
 
-/**
- * Function that builds a single card
- * This function should do the following:
- * 1. Create an individual card object with a property of "suit" set to the value of the suit parameter, and a property of "cardValue" set to the value of the cardValue parameter.
- * 2. Return the card object you created.
- * @function buildCard
- * @param {string} suit - The name of the suit of the card being built
- * @param {string} cardValue - The name of the card type for this card
- * @return {object} - The object containing information about this individual card
- */
-function buildCard( ){
-
+//This function is called to create and return individual cards using the suit and value parameter
+function buildCard(Suit,Value){
+    var card = {
+                suit:Suit,
+                value:Value
+                };
+    return card;            
 }
 
-/**
- * Function that shuffles all cards in a cardDeck array parameter.
- * This function should do the following:
- * 1. Make a copy of the cardDeck array you received as a parameter.
- * 2. Shuffle (randomize) the cards inside of the array copy you just made. You may accomplish this in any way you choose, so long as the contents of the array are randomized.
- * 3. Return the shuffled copy of the cardDeck.
- * @function shuffleCards
- * @param {array} cardDeck - The array of cards that you will shuffle
- * @return {array} Array of cards after having been shuffled
- */
-function shuffleCards( ){
-
+//Function to shuffle the deck of cards and return the shuffled deck
+function shuffleCards(cardDeck)
+{
+    var shuffleDeck = [];
+    while(cardDeck.length )
+    {
+        var posItemRemove = Math.floor(Math.random() * (cardDeck.length - 1));
+        shuffleDeck.push(cardDeck[posItemRemove]);
+        cardDeck.splice(posItemRemove,1);
+    }
+    return shuffleDeck;
 }
 
-/**
- * Function that deals cards on the DOM.
- * This function will take in a number and an array of cards, and deal that number of cards from the array of cards to the DOM.
- * This function should do the following:
- * 1. Remove the number of cards specified in the "num" parameter from the beginning of the "cardDeck" array parameter.
- * 2. Make a DOM element for each one of these cards dynamically.
- * 3. Place each dynamically created card element inside the DOM element with a class of "card-container".
- *      a. These DOM elements should be dynamically created using jQuery, and the element you create should follow the following format:
- *      b. <div class="card spade five"></div>
- *      c. In the above example, every card will have the "card" class, but "spade" will be the suit of the card you are creating, and "five" will be the cardValue.
- * IMPORTANT: When dynamically creating your card element, you may NOT use the form of jQuery DOM creation that is simply a string of the element in it's entirety. You must use either method chaining or object notation.
- * @function dealCards
- * @param {number} num - How many cards to deal
- * @param {array} cardDeck - The array of cards that you will deal from
- * @return none
- */
-function dealCards( ){
+//Function to deal 7 cards on the DOM from the shuffled deck of cards
+function dealCards(num, cardDeck)
+{
+    var sevenCards = [];
 
+    for(var x=0; x < num ; x++)
+        sevenCards.push(cardDeck[x]);        
+       
+    console.log("This the newpack of seven cards:",sevenCards);
+    
+    var value = "";     
+    var suitValue;
+    for(var x=0; x < sevenCards.length ; x++)
+    {
+            if(sevenCards[x].value == '2')
+                value = "two"; 
+            if(sevenCards[x].value == '3')
+                value = "three";     
+            if(sevenCards[x].value == '4')
+                value = "four";     
+            if(sevenCards[x].value == '5')
+                value = "five"; 
+            if(sevenCards[x].value == '6')
+                value = "six"; 
+            if(sevenCards[x].value == '7')
+                value = "seven"; 
+            if(sevenCards[x].value == '8')
+                value = "eight";    
+            if(sevenCards[x].value == '9')
+                value = "nine";    
+            if(sevenCards[x].value == '10')
+                value = "ten"; 
+            if(sevenCards[x].value == 'J')
+                value = "jack";    
+            if(sevenCards[x].value == 'Q')
+                value = "queen";
+            if(sevenCards[x].value == 'K')
+                value = "king";  
+            if(sevenCards[x].value == 'A')
+                value = "ace";           
+                             
+            suitValue = "card" + " " + sevenCards[x].suit + " " + value; 
+            console.log(suitValue);
+            
+            $("<div>", {
+                'class': suitValue,
+            }).appendTo($(".card-container"));                   
+    }
 }
+        
+
+
